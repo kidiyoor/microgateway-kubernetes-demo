@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: microservice-helloworld
+  labels:
+    app: microservice-helloworld
+spec:
+  restartPolicy: Never
+  containers:
+  - name: helloworld
+    image: tutum/hello-world
+    ports:
+      - containerPort: 80
+
+  - name: microgateway
+    image: gcr.io/cloud-gravity-161010/kube-microgateway
+    imagePullPolicy: Always
+    ports:
+      - containerPort: 8000
+    volumeMounts:
+    - name: apigee-microgateway-cred
+      mountPath: /opt/apigee/microgateway/cred
+      readOnly: true
+    - name: apigee-microgateway-default-config
+      mountPath: /root/.edgemicro/configmap
+
+  volumes:
+  - name: apigee-microgateway-cred
+    secret:
+      secretName: apigee-microgateway-bumblebee-test-cred
+  - name: apigee-microgateway-default-config
+    configMap:
+      name: apigee-microgateway-default-config
