@@ -11,7 +11,7 @@ TODO: describe the architecture
 
 ## Setup
 
-#### Pre-requisites 
+### Pre-requisites 
 - A kubernetes cluster
 - Configure kubectl to talk to your kubernetes cluster
 - Apigee Org
@@ -47,7 +47,7 @@ Before running this command please have a look at ``` artifacts/kube/config_maps
 kubectl create -f artifacts/kube/config_maps/apigee-microgateway-default-config.yaml
 ```
 
-#### Demo
+### Deploy
 
 Let's try deploy a simple helloworld microservice and add API management using Apigee microgateway.
 ```
@@ -134,7 +134,7 @@ This will create and kube service and kube POD for your microservice.
 
 Now your microservice is protected by Apigee microgateway. Microgateway will pull the proxies configured for that environment.
 
-#### Action
+### Action
 Lets hit this microservice and see a glimps of API managment in action.
 
 Get the IP address of you hello-world microservice
