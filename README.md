@@ -4,6 +4,8 @@ A microservice story with Apigee microgateway on kubernetes
 ## Architecture
 ![](images/kube-mg.png)
 
+TODO: describe the architecture
+
 ## Setup
 
 #### Pre-requisites 
