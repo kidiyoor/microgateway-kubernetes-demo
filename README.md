@@ -21,15 +21,18 @@ For Apigee microgateway to run on kubernetes we need two set of informations
 
 
 We will use **Kubernetes secrets** to store Org details and attach it to your microservice during deploy time. 
-You can have multiple secrets in your kube namespace. This provides you flexibility to select apigee environment for your microservice during deploy time. As result of which you can have apigee prod/test env setup for your microservice in kube cluster.
+
+You can have different secrets for each Apigee environment in your kube namespace. This provides you flexibility to select right Apigee Environment for your microservice during deploy time. As result of which you can have apigee prod/test env setup for your microservice in kube cluster.
 
 
-We will use **Kubernetes configmap** to store Microgateway configuration and attach it to your microservice during deploy time. You can have multiple configmap in your kube namespace. This provide you flexibility to categorize your microservices into logical groups having similar proxy configuration.
+We will use **Kubernetes configmap** to store Microgateway configuration and attach it to your microservice during deploy time. 
+
+You can have multiple configmap in your kube namespace. This provide you flexibility to categorize your microservices into logical groups having similar microgateway configuration.
 
 
 Run the following commands to create a secret for your org/env pair and to create a configmap with default microgateway configuration
 
-
+------
 Before running this command please update the ```artifacts/kube/secrets/cred.txt``` with right credentials.
 ```
 kubectl create secret generic apigee-microgateway-orgname-env-cred --from-file=artifacts/kube/secrets/cred.txt
@@ -58,7 +61,7 @@ spec:
       - containerPort: 80
 ```
 
-This is a simple helloworld microservice which if I deploy as it is will allow me to hit port 80 using kube service and return "helloworld" in response.
+This is a simple helloworld microservice which if I deploy as it is, will allow me to hit port 80 and return "helloworld" in response.
 
 Instead I will inject Apigee microgateway to this microservice like bellow and try using API managment for this helloworld microservice.
 
@@ -98,9 +101,9 @@ spec:
       name: apigee-microgateway-default-config
 ```
 
-Notice that I have attached two volumes to the POD, which basically the configuration for Apigee mirogateway to run.
+Notice that I have attached two volumes to the POD, which are basically the configuration for Apigee mirogateway to run.
 
-Let's goahead and deploy helloworld proxy on your Apigee Organization in the right environment which is mentioned in the kube secret that is attached to your helloworld microservice.
+Let's goahead and deploy helloworld proxy on your Apigee Organization in the right you specified in the kube secret that is attached to your helloworld microservice.
 
 Follow the instructions bellow - 
 - goto https://apigee.com/api-management 
@@ -127,7 +130,7 @@ This will create and kube service and kube POD for your microservice.
 Now your microservice is protected by Apigee microgateway. Microgateway will pull the proxies configured for that environment.
 
 
-Lets hit this microservice and see API glimps of API managment in action.
+Lets hit this microservice and see a glimps of API managment in action.
 
 Get the IP address of you hello-world microservice
 ```
