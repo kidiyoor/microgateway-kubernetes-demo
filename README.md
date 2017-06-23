@@ -1,5 +1,8 @@
 # Apigee Microgateway-Kubernetes-Demo
-A microservice story with Apigee microgateway on kubernetes
+
+A microservice story with Apigee microgateway on kubernetes. Building microservice is hard. But with the help of open source microservice management platform like kubernetes, it powers developers build scalable microservices with certain level of abstraction. 
+
+Pease refer this slides on how Apigee will add value to your microservcie story - https://docs.google.com/a/google.com/presentation/d/1UPdMUF-9d2n1JOBPFwcZ7YKm8ZDPnel2yK_QCK8V7AE/edit?usp=sharing
 
 ## Architecture
 ![](images/kube-mg.png)
