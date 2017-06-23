@@ -17,9 +17,12 @@ TODO: describe the architecture
 - Apigee Org
 - node.js
 - npm
+- build docker kube-microgateway docker image(optional, skip if you already have access to kube-microgateway image)
+  - ./setup/build_containers.sh
+  - push it to your docker registry
+  - replace the docker image in ```artifacts/kube/services/microservice-helloworld.yaml``` with the new docker image
 
 #### Configuration
-
 For Apigee microgateway to run on kubernetes we need two set of informations
 - Org details with credentials(eg: orgname, env, username, password)
 - Microgateway configuration(eg: max_connections, log level, plugins)
@@ -48,6 +51,23 @@ kubectl create -f artifacts/kube/config_maps/apigee-microgateway-default-config.
 ```
 
 ### Deploy
+This section we :
+- Deploy apigee proxy
+- Deploy helloworld microservice
+
+Let's deploy helloworld proxy on your Apigee Organization in the right environment which you specified in the kube secret that is attached to your helloworld microservice.
+
+Follow the instructions bellow - 
+- goto https://apigee.com/api-management 
+- goto develop-> API proxies
+- click on create proxy
+- select reverse proxy 
+- enter a proxy name: helloworld
+- enter http://localhost in 'Existing API' section, since microgateway and helloworld container are running in same POD they can communicate over local network interface.
+- select pass through authorization
+- select right environment where you want to deploy the proxy(same environment which you mentioned in the secret)
+- click next next next to create the proxy
+
 
 Let's try deploy a simple helloworld microservice and add API management using Apigee microgateway.
 ```
@@ -108,20 +128,6 @@ spec:
 
 Notice that I have attached two volumes to the POD, which are basically the configuration for Apigee mirogateway to run.
 
-Let's deploy helloworld proxy on your Apigee Organization in the right environment which you specified in the kube secret that is attached to your helloworld microservice.
-
-Follow the instructions bellow - 
-- goto https://apigee.com/api-management 
-- goto develop-> API proxies
-- click on create proxy
-- select reverse proxy 
-- enter a proxy name: helloworld
-- enter http://localhost in 'Existing API' section, since microgateway and helloworld container are running in same POD they can communicate over local network interface.
-- select pass through authorization
-- select right environment where you want to deploy the proxy(same environment which you mentioned in the secret)
-- click next next next to create the proxy
-
-
 Lets deploy this microservice. Run the bellow command
 ```
 cd setup
@@ -135,6 +141,11 @@ This will create and kube service and kube POD for your microservice.
 Now your microservice is protected by Apigee microgateway. Microgateway will pull the proxies configured for that environment.
 
 ### Action
+This section we :
+- Hit the microservie we just deployed | should fail because of authorization check at microgateway
+- Get valid APIKEY from apigee UI and make succesfull calls.
+- Generate traffic and see analytics for your microservice in apigee UI
+
 Lets hit this microservice and see a glimps of API managment in action.
 
 Get the IP address of you hello-world microservice
