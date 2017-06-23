@@ -105,7 +105,7 @@ spec:
 
 Notice that I have attached two volumes to the POD, which are basically the configuration for Apigee mirogateway to run.
 
-Let's goahead and deploy helloworld proxy on your Apigee Organization in the right you specified in the kube secret that is attached to your helloworld microservice.
+Let's deploy helloworld proxy on your Apigee Organization in the right environment which you specified in the kube secret that is attached to your helloworld microservice.
 
 Follow the instructions bellow - 
 - goto https://apigee.com/api-management 
@@ -131,7 +131,7 @@ This will create and kube service and kube POD for your microservice.
 
 Now your microservice is protected by Apigee microgateway. Microgateway will pull the proxies configured for that environment.
 
-
+#### Action
 Lets hit this microservice and see a glimps of API managment in action.
 
 Get the IP address of you hello-world microservice
@@ -147,3 +147,5 @@ curl <ip>
 You should be see Authorization failures
 
 TODO: get apikey and run successful calls
+TODO: analytics
+TODO: plugins
